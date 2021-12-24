@@ -5,9 +5,13 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import ListSubheader from '@mui/material/ListSubheader';
+
 import IconButton from '@mui/material/IconButton';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+
 import InfoIcon from '@mui/icons-material/Info';
-import { shade } from 'polished';
+import { shade, lighten } from 'polished';
 
 import { Container } from './styles';
 
@@ -20,35 +24,51 @@ const Main: React.FC<Props> = ({ toggleTheme }) => {
 
   return (
     <Container>
-      <ImageList sx={{ width: '100%', height: '100%' }}>
-        <ImageListItem key="Subheader" cols={5}>
-          <ListSubheader component="div" style={{ color: colors.primary, background: colors.background }}>December</ListSubheader>
-        </ImageListItem>
+      <div className="List">
         {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+          <div className="ListItem">
             <img
               src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
-              style={{ width: "400px" }}
             />
-            <ImageListItemBar
-              title={item.title}
-              subtitle={item.author}
-              actionIcon={
-                <IconButton
-                  sx={{ color: shade(-0.5, colors.primary) }}
-                  aria-label={`info about ${item.title}`}
-                >
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </ImageListItem>
+            <div className="ListItemInfo" style={{ color: lighten(0.5, colors.primary) }}>
+              <div className="ItemDescription">
+                <strong>{item.title}</strong>
+                <p>{item.author}</p>
+              </div>
+              <IconButton
+                sx={{ color: shade(-0.5, colors.primary) }}
+                aria-label={`info about ${item.title}`}
+              >
+                <InfoIcon />
+              </IconButton>
+            </div>
+          </div>
         ))}
-      </ImageList>
-    </Container>
+      </div>
+
+      <div className="Cart">
+        <header>
+          <AccountCircleIcon sx={{ color: colors.secundary, fontSize: 50 }} />
+          <strong>Comprador</strong>
+        </header>
+        <main>
+          <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+            <li>Item 4</li>
+            <li>Item 5</li>
+            <li>Item 6</li>
+          </ul>
+        </main>
+        <footer>
+          <LocalAtmIcon sx={{ color: colors.secundary, fontSize: 50 }} />
+          <strong>50.60</strong>
+        </footer>
+      </div>
+    </Container >
   );
 };
 
